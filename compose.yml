@@ -1,0 +1,49 @@
+services:
+  fluentlab:
+    build: .
+    container_name: fluentlab
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8082:8000"
+    volumes:
+      - fluentlab_data:/data
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: qwen2.5:1.5b
+    depends_on:
+      ollama:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8000/api/dashboard"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: fluentlab-ai
+    restart: unless-stopped
+    volumes:
+      - fluentlab_models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  model-init:
+    image: ollama/ollama:latest
+    container_name: fluentlab-model-init
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    command: ["pull", "qwen2.5:1.5b"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    volumes:
+      - fluentlab_models:/root/.ollama
+
+volumes:
+  fluentlab_data:
+  fluentlab_models:

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Aprende inglés con gramática graduada, vocabulario personal y repaso inteligente.">
+  <title>FluentLab · English practice</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236c4bf4'/%3E%3Cpath d='M18 16h29v8H28v8h16v8H28v12H18z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css?v=1">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="logo" href="#dashboard"><span>F</span><strong>FluentLab</strong></a>
+      <nav aria-label="Secciones">
+        <button class="nav-item active" data-view="dashboard"><i>⌂</i><span>Inicio</span></button>
+        <button class="nav-item" data-view="grammar"><i>✦</i><span>Gramática</span></button>
+        <button class="nav-item" data-view="vocabulary"><i> Aa </i><span>Mi corpus</span></button>
+        <button class="nav-item" data-view="practice"><i>◫</i><span>Practicar</span></button>
+      </nav>
+      <div class="sidebar-card">
+        <span>Tu nivel de trabajo</span>
+        <select id="globalLevel" aria-label="Nivel de inglés">
+          <option>B1</option><option>B2</option><option>C1</option><option>C2</option>
+        </select>
+        <small>El contenido se adapta sin ocultar lo anterior.</small>
+      </div>
+      <div class="data-note">Datos guardados en tu homelab.<br>Diccionario: Free Dictionary + Datamuse.</div>
+    </aside>
+
+    <main>
+      <header class="mobile-header"><a class="logo" href="#dashboard"><span>F</span><strong>FluentLab</strong></a><button id="menuButton" aria-label="Abrir menú">☰</button></header>
+
+      <section id="dashboard" class="view active">
+        <div class="page-heading"><div><span class="kicker">YOUR ENGLISH WORKSPACE</span><h1>Practica lo que realmente necesitas.</h1><p>Gramática graduada, tus propias palabras y repasos que se alimentan entre sí.</p></div><button class="primary" data-go="grammar">Continuar practicando</button></div>
+        <div class="stats" id="stats"></div>
+        <div class="dashboard-grid">
+          <article class="feature-card grammar-feature">
+            <div class="card-top"><span class="icon violet">✦</span><span class="level-pill" id="dashLevel">B1</span></div>
+            <h2>Conditionals</h2><p>Desde situaciones reales hasta mixed conditionals e inversión formal.</p>
+            <div class="progress-track"><i id="grammarProgress"></i></div>
+            <button class="text-button" data-go="grammar">Ver ruta de gramática</button>
+          </article>
+          <article class="feature-card corpus-feature">
+            <div class="card-top"><span class="icon coral">Aa</span><span class="subtle" id="wordCount">0 palabras</span></div>
+            <h2>Corpus personal</h2><p>Cada palabra se clasifica y vuelve a aparecer en tus ejercicios.</p>
+            <form class="quick-add" id="quickAdd"><input name="word" placeholder="Añade una palabra, p. ej. nevertheless" autocomplete="off"><button class="primary">Añadir</button></form>
+            <div class="recent-words" id="recentWords"></div>
+          </article>
+          <article class="today-card">
+            <span class="kicker">SESIÓN RECOMENDADA</span><h2>12 minutos bien usados</h2>
+            <ol><li><b>4 min</b> repaso de tarjetas</li><li><b>5 min</b> conditionals</li><li><b>3 min</b> vocabulario en contexto</li></ol>
+            <button class="secondary" data-go="practice">Empezar sesión</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="grammar" class="view">
+        <div class="page-heading compact"><div><span class="kicker">GRAMMAR PATH</span><h1>Conditionals, paso a paso.</h1><p>Elige una lección o mezcla formatos para comprobar si reconoces la estructura sin pistas.</p></div><button class="primary" id="mixedPractice">Práctica mixta</button></div>
+        <div class="grammar-layout">
+          <div><div class="section-label"><h2>Ruta disponible</h2><span id="lessonCount"></span></div><div id="lessonGrid" class="lesson-grid"></div></div>
+          <aside id="lessonPanel" class="lesson-panel"><div class="empty-panel"><span>✦</span><h3>Selecciona una lección</h3><p>Aquí verás la regla, ejemplos y los puntos en los que suele fallar un hispanohablante.</p></div></aside>
+        </div>
+      </section>
+
+      <section id="vocabulary" class="view">
+        <div class="page-heading compact"><div><span class="kicker">PERSONAL CORPUS</span><h1>Palabras que quieres hacer tuyas.</h1><p>Escribe una palabra, un verbo con “to” o una expresión. La IA local distinguirá el tipo y preparará definición, ejemplo y nivel.</p></div></div>
+        <form id="wordForm" class="word-form"><div><label for="wordInput">Palabra, verbo o expresión en inglés</label><input id="wordInput" placeholder="to whisk, by no means, silver bullet…" autocomplete="off"></div><button class="primary">Analizar y guardar</button></form>
+        <div class="filter-row"><div class="segmented" id="vocabFilters"><button class="active" data-filter="">Todas</button><button data-filter="B1">B1</button><button data-filter="B2">B2</button><button data-filter="C1">C1</button><button data-filter="C2">C2</button></div><div><button class="secondary" id="reanalyzeCorpus">Reanalizar con IA</button> <span id="corpusStatus"></span></div></div>
+        <div id="wordGrid" class="word-grid"></div>
+      </section>
+
+      <section id="practice" class="view">
+        <div class="page-heading compact"><div><span class="kicker">ACTIVE RECALL</span><h1>Recuerda antes de volver a mirar.</h1><p>Alterna ejercicios en contexto y tarjetas. La dificultad se adapta a tu nivel seleccionado.</p></div></div>
+        <div class="practice-tabs"><button class="active" data-practice="cards">Tarjetas</button><button data-practice="context">Vocabulario en contexto</button><button data-practice="grammar">Grammar challenge</button></div>
+        <div id="practiceArea" class="practice-area"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="exerciseDialog"><div class="exercise-modal"><button class="close" aria-label="Cerrar">×</button><div id="exerciseContent"></div></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js?v=2"></script>
+</body>
+</html>
