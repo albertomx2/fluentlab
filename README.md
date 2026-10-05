@@ -89,6 +89,9 @@ Las pruebas actuales comprueban el banco estático, no toda la interfaz ni la in
 
 ## Créditos y licencia
 
+Se han [rescatado ideas del antiguo English Trainer](docs/english-trainer-ideas.md)
+para futuras mejoras. Son propuestas documentadas, no funcionalidades ya integradas.
+
 [Free Dictionary API](https://dictionaryapi.dev/), [Datamuse](https://www.datamuse.com/api/) y [Ollama](https://github.com/ollama/ollama) tienen sus propias condiciones. Revisa la licencia del modelo antes de redistribuirlo.
 
 El código propio todavía no declara una licencia de reutilización. Publicar el repositorio no concede automáticamente una licencia open source.
